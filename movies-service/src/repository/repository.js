@@ -1,7 +1,8 @@
 const { ObjectId } = require('mongodb');
 const database = require('../config/database');
+const { json } = require('express');
 
-async function findDocuments(collectionName) {
+async function findAllDocuments(collectionName) {
     const db = await database.connect();
     try {
         const documents = await db
@@ -49,4 +50,4 @@ async function insertDocument(collectionName, document) {
     }
 }
 
-module.exports = { findDocuments, findDocumentById, findDocumentByFilter, insertDocument };
+module.exports = { findAllDocuments, findDocumentById, findDocumentByFilter, insertDocument };
