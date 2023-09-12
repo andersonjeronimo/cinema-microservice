@@ -2,17 +2,15 @@ module.exports = (app, repository) => {
     //module.exports = { , , , insertDocument };
     app.get('/:collection', async (req, res, next) => {
         const collectionName = req.params.collection;
-        console.log(collectionName);
         const filter = req.query;
-        console.log(filter);
-        var data = {};
-        if (filter === {}) {
-            data = await repository.findAllDocuments(collectionName);
+        var data = {};        
+        if (Object.entries(filter).length > 0) {
+            data = await repository.findDocumentByFilter(collectionName, filter);
             if (!data || data.length === 0) {
                 return res.sendStatus(404);
             }
         } else {
-            data = await repository.findDocumentByFilter(collectionName, filter);
+            data = await repository.findAllDocuments(collectionName);
             if (!data || data.length === 0) {
                 return res.sendStatus(404);
             }

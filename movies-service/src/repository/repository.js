@@ -1,6 +1,5 @@
 const { ObjectId } = require('mongodb');
 const database = require('../config/database');
-const { json } = require('express');
 
 async function findAllDocuments(collectionName) {
     const db = await database.connect();
