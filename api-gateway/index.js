@@ -5,6 +5,8 @@ const cookieParser = require('cookie-parser');
 const morgan = require('morgan');
 const helmet = require('helmet');
 const cors = require('cors');
+const auth = require('./auth');
+
 
 const app = express();
 
@@ -13,6 +15,14 @@ app.use(helmet());
 app.use(cookieParser());
 app.use(cors());
 app.options('*', cors());
+
+app.use(express.json());
+
+app.post('/login', auth.doLogin);
+
+app.post('/logout', auth.validateToken, auth.doLogout);
+
+
 
 const options = {
     proxyReqPathResolver: (req) => {

@@ -1,9 +1,11 @@
+const { validateToken } = require('../middlewares/validationMiddleware');
+
 module.exports = (app, repository) => {
     //module.exports = { , , , insertDocument };
-    app.get('/:collection', async (req, res, next) => {
+    app.get('/:collection',validateToken, async (req, res, next) => {
         const collectionName = req.params.collection;
         const filter = req.query;
-        var data = {};        
+        var data = {};
         if (Object.entries(filter).length > 0) {
             data = await repository.findDocumentByFilter(collectionName, filter);
             if (!data || data.length === 0) {
@@ -18,7 +20,7 @@ module.exports = (app, repository) => {
         res.json(data);
     })
 
-    app.get('/:collection/:id', async (req, res, next) => {
+    app.get('/:collection/:id', validateToken, async (req, res, next) => {
         const id = req.params.id;
         const collectionName = req.params.collection;
         const data = await repository.findDocumentById(collectionName, id);
