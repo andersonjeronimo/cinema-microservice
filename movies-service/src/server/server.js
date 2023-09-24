@@ -1,6 +1,8 @@
+require('express-async-errors');
 const express = require('express');
 const morgan = require('morgan');
 const helmet = require('helmet');
+const logger = require('../config/logger');
 
 let server = null;
 
@@ -8,6 +10,7 @@ async function start(api, repository) {
     const app = express();
     app.use(helmet());
     app.use(morgan('dev'));
+    app.use(express.json());
 
 
     //Monitoria e observabilidade
@@ -19,9 +22,10 @@ async function start(api, repository) {
     api(app, repository);
     //MUITO IMPORTANTE!!!!!!!!!!!!!!!!!!!!!!!!
 
-    //middleware de erros
-    app.use((err, req, res, next) => {
-        console.error(err);
+    //middleware de erros com express-async-errors 
+    app.use((error, req, res, next) => {
+        //console.error(err);
+        logger.error(error);
         res.sendStatus(500);
     })
 

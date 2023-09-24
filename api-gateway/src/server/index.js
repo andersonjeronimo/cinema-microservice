@@ -5,8 +5,8 @@ const cookieParser = require('cookie-parser');
 const morgan = require('morgan');
 const helmet = require('helmet');
 const cors = require('cors');
-const auth = require('./auth');
-
+const { postUser, doLogin, doLogout } = require('../controllers/auth');
+const { validateToken, validateAdmin, validateUser, validateBlacklist } = require('../middlewares/validationMiddleware');
 
 const app = express();
 
@@ -18,11 +18,11 @@ app.options('*', cors());
 
 app.use(express.json());
 
-app.post('/login', auth.doLogin);
-
-app.post('/logout', auth.validateToken, auth.doLogout);
-
-
+app.post('/gateway/login', doLogin);
+//com excessão da rota de login, todas =>'*' as outras rotas verificam blacklist
+app.use('*', validateBlacklist);
+app.post('/gateway/logout', validateToken, doLogout);
+app.post('/gateway/users', validateToken, validateAdmin, validateUser, postUser);
 
 const options = {
     proxyReqPathResolver: (req) => {

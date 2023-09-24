@@ -5,11 +5,12 @@
   "main": "index.js",
   "scripts": {
     "start": "node -r dotenv/config index",
-    "dev": "npx nodemon -r dotenv/config index"
+    "dev": "npx nodemon -r dotenv/config ./server/index"
   },
   "author": "Anderson Luiz",
   "license": "ISC",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "dotenv-safe": "^8.2.0",
@@ -17,7 +18,10 @@
     "express-http-proxy": "^2.0.0",
     "helmet": "^7.0.0",
     "http": "^0.0.1-security",
+    "joi": "^17.10.2",
     "jsonwebtoken": "^9.0.2",
-    "morgan": "^1.10.0"
+    "mongodb": "^6.1.0",
+    "morgan": "^1.10.0",
+    "winston": "^3.10.0"
   }
 }

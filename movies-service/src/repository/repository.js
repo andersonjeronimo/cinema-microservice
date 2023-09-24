@@ -40,10 +40,10 @@ async function findDocumentByFilter(collectionName, filter) {
 async function insertDocument(collectionName, document) {
     const db = await database.connect();
     try {
-        const id = await db
+        const result = await db
             .collection(collectionName)
             .insertOne(document);
-        return id;
+        return result;
     } catch (error) {
         console.log(error);
     }
